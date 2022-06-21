@@ -8,6 +8,6 @@ router.post('/update',checkRole('ADMIN'), deviceController.setDescription)
 router.get('/', deviceController.getAll)
 router.get('/:id', deviceController.getOne)
 router.get('/update/:id', deviceController.update)
-router.post('/del/:id', deviceController.delOne)
+router.post('/del/:id',checkRole('ADMIN'), deviceController.delOne)
 
 module.exports = router

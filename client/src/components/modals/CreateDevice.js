@@ -8,6 +8,7 @@ import {observer} from "mobx-react-lite";
 const CreateDevice = observer(({show, onHide}) => {
     const {device} = useContext(Context)
     const [name, setName] = useState('')
+    const [country, setCountry] = useState('')
     const [amount, setAmount] = useState(1)
     const [price, setPrice] = useState(0)
     const [file, setFile] = useState(null)
@@ -37,11 +38,13 @@ const CreateDevice = observer(({show, onHide}) => {
         const formData = new FormData()
         try{
             formData.append('name', name)
-            formData.append('amount', amount)
+            formData.append('country', 10)
             formData.append('price', `${price}`)
             formData.append('img', file)
+            formData.append('amount', `${amount}`)
             formData.append('brandId', device.selectedBrand.id)
             formData.append('typeId', device.selectedType.id)
+            formData.append('legalId', device.selectedLegal.id)
             formData.append('info', JSON.stringify(info))
             createDevice(formData).then(data => onHide())
         } catch(e){
@@ -57,7 +60,7 @@ const CreateDevice = observer(({show, onHide}) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Добавить устройство
+                    Додати пристрій
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -115,8 +118,8 @@ const CreateDevice = observer(({show, onHide}) => {
                         type="number"
                     />
                     <Form.Control
-                        value={name}
-                        onChange={e => setName(e.target.value)}
+                        value={amount}
+                        onChange={e => setAmount(Number(e.target.value))}
                         className="mt-3"
                         placeholder="Введіть кількість"
                     />
@@ -124,6 +127,12 @@ const CreateDevice = observer(({show, onHide}) => {
                         className="mt-3"
                         type="file"
                         onChange={selectFile}
+                    />
+                    <Form.Control
+                        value={country}
+                        onChange={e => setCountry(e.target.value)}
+                        className="mt-3"
+                        placeholder="Введіть назву"
                     />
                     <hr/>
                     <Button

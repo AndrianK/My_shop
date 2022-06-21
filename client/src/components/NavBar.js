@@ -20,19 +20,19 @@ const NavBar = observer(() => {
     return (
         <Navbar bg="dark" variant="dark">
             <Container>
-                <label style={{color:'white'}} onClick={() => history(SHOP_ROUTE)}>КупиДевайс</label>
+                <label style={{color:'white'}} onClick={() => history(SHOP_ROUTE)}>Shop</label>
                 {user.isAuth ?
                     <Nav className="ml-auto" style={{color: 'white'}}>
                         {user.isRole === 'ADMIN'?<Button
                             variant={"outline-light"}
                             onClick={() => history(ADMIN_ROUTE)}
                         >
-                            Админ панель
+                            Адмін панель
                         </Button>: <Button
                             variant={"outline-light"}
                             onClick={() => history(BASKET_ROUTE)}
                         >
-                            Корзина
+                            Кошик
                         </Button> }
                         <Button
                             variant={"outline-light"}
@@ -44,7 +44,7 @@ const NavBar = observer(() => {
                     </Nav>
                     :
                     <Nav className="ml-auto" style={{color: 'white'}}>
-                        <Button variant={"outline-light"} onClick={() => history(LOGIN_ROUTE)}>Авторизация</Button>
+                        <Button variant={"outline-light"} onClick={() => history(LOGIN_ROUTE)}>Авторизація</Button>
                     </Nav>
                 }
             </Container>

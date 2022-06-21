@@ -32,12 +32,12 @@ const Basket = observer(() => {
         <Container
             className="d-flex flex-sm-column justify-content-center align-items-center mt-3"
         >
-            <h1 className="pb-2">Корзина</h1>
+            <h1 className="pb-2">Кошик</h1>
 
             {/* ------- Считаем общую сумму ------- */}
 
             <Card className="d-flex flex-row  p-2 justify-content-between align-items-center mb-2">
-                <h1 className="align-self-end" >Итого:</h1>
+                <h1 className="align-self-end" >Усього:</h1>
                 <h3  className="ms-3 align-self-end">{prices}<span className="font-weight-light pl-2"> $$$ </span></h3>
             </Card>
             {device.basket.map(product =>
@@ -70,7 +70,7 @@ const Basket = observer(() => {
 
             <Row> <Button variant={"outline-dark"} onClick={() => setOrderVisible(true)}>Отправить заказ</Button> </Row>
 
-            <h1 className="pt-5 pb-2">Предыдущие заказы</h1>
+            <h1 className="pt-5 pb-2">Попередні замовлення</h1>
 
             <Row className=" w-100 row pb-1">
                 <Col className={"mt-3"}>Addressee</Col>

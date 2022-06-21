@@ -44,7 +44,7 @@ const CreateLegal = observer(({show, onHide}) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Добавить устройство
+                    Додати виробника
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

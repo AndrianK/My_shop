@@ -80,10 +80,11 @@ class DeviceController {
     }
     async delOne(req, res) {
         const {id} = req.params
-        const device = await Device.findOne(
+        const device = await Device.destroy(
             {
-                where: {id}
+                where: {id: id}
             },
+
         )
         return res.json(device)
     }

@@ -29,7 +29,7 @@ const Device = sequelize.define('device', {
     img: {type: DataTypes.STRING, allowNull: false},
     _info:{type: DataTypes.TEXT, defaultValue: Lorem},
     amount:{type: DataTypes.INTEGER, allowNull: false},
-    country:{type: DataTypes.INTEGER, allowNull: false},
+    country:{type: DataTypes.STRING, allowNull: false},
 
 })
 
