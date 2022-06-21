@@ -2,12 +2,13 @@ import React, {useContext, useEffect, useState} from 'react';
 import Modal from "react-bootstrap/Modal";
 import {Button, Dropdown, Form, Row, Col} from "react-bootstrap";
 import {Context} from "../../index";
-import {createDevice, fetchBrands, fetchTypes} from "../../http/deviceAPI";
+import {createDevice, fetchBrands, fetchLegal, fetchTypes} from "../../http/deviceAPI";
 import {observer} from "mobx-react-lite";
 
 const CreateDevice = observer(({show, onHide}) => {
     const {device} = useContext(Context)
     const [name, setName] = useState('')
+    const [amount, setAmount] = useState(1)
     const [price, setPrice] = useState(0)
     const [file, setFile] = useState(null)
     const [info, setInfo] = useState([])
@@ -15,6 +16,7 @@ const CreateDevice = observer(({show, onHide}) => {
     useEffect(() => {
         fetchTypes().then(data => device.setTypes(data))
         fetchBrands().then(data => device.setBrands(data))
+        fetchLegal().then(data => device.setLegals(data))
     }, [])
 
     const addInfo = () => {
@@ -35,6 +37,7 @@ const CreateDevice = observer(({show, onHide}) => {
         const formData = new FormData()
         try{
             formData.append('name', name)
+            formData.append('amount', amount)
             formData.append('price', `${price}`)
             formData.append('img', file)
             formData.append('brandId', device.selectedBrand.id)
@@ -85,18 +88,37 @@ const CreateDevice = observer(({show, onHide}) => {
                             )}
                         </Dropdown.Menu>
                     </Dropdown>
+                    <Dropdown className="mt-2 mb-2">
+                        <Dropdown.Toggle>{device.selectedLegal.name || "Выберите тип"}</Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            {device.legals.map(legal=>
+                                <Dropdown.Item
+                                    onClick={() => device.setSelectedLegal(legal)}
+                                    key={legal.id}
+                                >
+                                    {legal.name}
+                                </Dropdown.Item>
+                            )}
+                        </Dropdown.Menu>
+                    </Dropdown>
                     <Form.Control
                         value={name}
                         onChange={e => setName(e.target.value)}
                         className="mt-3"
-                        placeholder="Введите название устройства"
+                        placeholder="Введіть назву"
                     />
                     <Form.Control
                         value={price}
                         onChange={e => setPrice(Number(e.target.value))}
                         className="mt-3"
-                        placeholder="Введите стоимость устройства"
+                        placeholder="Введіть вартість"
                         type="number"
+                    />
+                    <Form.Control
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                        className="mt-3"
+                        placeholder="Введіть кількість"
                     />
                     <Form.Control
                         className="mt-3"
@@ -108,7 +130,7 @@ const CreateDevice = observer(({show, onHide}) => {
                         variant={"outline-dark"}
                         onClick={addInfo}
                     >
-                        Добавить новое свойство
+                        Додати нову характеристику
                     </Button>
                     {info.map(i =>
                         <Row className="mt-4" key={i.number}>
@@ -116,14 +138,14 @@ const CreateDevice = observer(({show, onHide}) => {
                                 <Form.Control
                                     value={i.title}
                                     onChange={(e) => changeInfo('title', e.target.value, i.number)}
-                                    placeholder="Введите название свойства"
+                                    placeholder="Введіть назву характеристики"
                                 />
                             </Col>
                             <Col md={4}>
                                 <Form.Control
                                     value={i.description}
                                     onChange={(e) => changeInfo('description', e.target.value, i.number)}
-                                    placeholder="Введите описание свойства"
+                                    placeholder="Введіть опис характеристики"
                                 />
                             </Col>
                             <Col md={4}>

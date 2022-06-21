@@ -5,11 +5,13 @@ export default class DeviceStore {
         this._types = []
         this._brands = []
         this._devices = []
+        this._legals = []
         this._baskets = []
         this._orders = []
         this._orders_lists = []
         this._selectedType = {}
         this._selectedBrand = {}
+        this._selectedLegal = {}
         this._selectedOrder = 0
         this._page = 1
         this._totalCount = 0
@@ -23,6 +25,9 @@ export default class DeviceStore {
     }
     setBrands(brands) {
         this._brands = brands
+    }
+    setLegals(legals) {
+        this._legals= legals
     }
     setDevices(devices) {
         this._devices = devices
@@ -49,6 +54,9 @@ export default class DeviceStore {
     }
     setSelectedOrder(order) {
         this._selectedOrder = order
+    }
+    setSelectedLegal(legal) {
+        this._selectedLegal = legal
     }
 
     setPage(page) {
@@ -85,6 +93,9 @@ export default class DeviceStore {
     get selectedBrand() {
         return this._selectedBrand
     }
+    get selectedLegal() {
+        return this._selectedLegal
+    }
     get totalCount() {
         return this._totalCount
     }
@@ -93,5 +104,8 @@ export default class DeviceStore {
     }
     get limit() {
         return this._limit
+    }
+    get legals() {
+        return this._legals
     }
 }

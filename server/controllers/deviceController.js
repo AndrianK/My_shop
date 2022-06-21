@@ -7,11 +7,11 @@ const ApiError = require('../error/ApiError');
 class DeviceController {
     async create(req, res, next) {
         try {
-            let {name, price, brandId, typeId, info} = req.body
+            let {name, price, brandId, typeId, info, legalId, amount, country} = req.body
             const {img} = req.files
             let fileName = uuid.v4() + ".jpg"
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
-            const device = await Device.create({name, price, brandId, typeId, img: fileName});
+            const device = await Device.create({name, price, brandId, typeId, img: fileName, legalId, amount, country});
             if (info) {
                 info = JSON.parse(info)
                 info.forEach(i =>
@@ -75,6 +75,23 @@ class DeviceController {
                 where: {id},
                 include: [{model: DeviceInfo, as: 'info'}]
             },
+        )
+        return res.json(device)
+    }
+    async delOne(req, res) {
+        const {id} = req.params
+        const device = await Device.findOne(
+            {
+                where: {id}
+            },
+        )
+        return res.json(device)
+    }
+    async update(req, res) {
+        const {_id,_amount} = req.params
+        const device = await Device.update(
+            {amount: _amount},
+            {where: {id: _id}}
         )
         return res.json(device)
     }

@@ -2,11 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import bigStar from '../assets/bigStar.png';
 import {useParams} from 'react-router-dom';
-import {addToBasket, fetchOneDevice} from "../http/deviceAPI";
+import {addToBasket, delDevice, fetchOneDevice} from "../http/deviceAPI";
 import {observer} from "mobx-react-lite";
 import {useContext} from "react";
 import {Context} from "../index";
-import setDescription from "../components/modals/SetDescription";
 import SetDescription from "../components/modals/SetDescription";
 
 const DevicePage = observer(() => {
@@ -20,7 +19,7 @@ const DevicePage = observer(() => {
     }, [])
 
 
-    // ------- Создаём функцию для записи ------- //
+    // ------- Функція додання у кошик ------- //
     const add = () => {
         const formData = new FormData()
         formData.append('deviceId', id)
@@ -60,13 +59,13 @@ const DevicePage = observer(() => {
                 >
                     <h3>От: {device.price} Грн.</h3>
 
-                    {/* Запускаем функцию */}
-                    <Button variant={"outline-dark"} onClick={add}>Добавить в корзину</Button>
+
+                    <Button variant={"outline-dark"} onClick={add}>Додати в кошик</Button>
 
                 </Card>
                 </Col>
             </Row>
-            {user.isRole?
+            {user.isRole === "ADMIN"?
             <Row>
 
                 <Button
@@ -74,8 +73,16 @@ const DevicePage = observer(() => {
                     className="mt-4 p-2"
                     onClick={() => setDeviceVisible(true)}
                 >
-                    Добавить описание
+                    Додати опис
                 </Button>
+                <Button
+                    variant={"outline-dark"}
+                    className="mt-4 p-2"
+                    onClick={() => delDevice(id).then(response => alert(`Товар було видалено!`)) }
+                >
+                    Видалити
+                </Button>
+
                 <SetDescription show={deviceVisible} onHide={() => setDeviceVisible(false)}/>
             </Row>:<br/>
         }

@@ -14,7 +14,7 @@ const Order = sequelize.define('order', {
     phone: {type: DataTypes.STRING,  allowNull: false},
     postcode: {type: DataTypes.STRING, allowNull: false},
     addressee: {type: DataTypes.STRING, allowNull: false},
-    status:{type: DataTypes.INTEGER, defaultValue: 0}
+    status:{type: DataTypes.INTEGER, defaultValue: 1}
 })
 
 const Basket = sequelize.define('basket', {
@@ -27,8 +27,13 @@ const Device = sequelize.define('device', {
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     price: {type: DataTypes.INTEGER, allowNull: false},
     img: {type: DataTypes.STRING, allowNull: false},
-    _info:{type: DataTypes.TEXT, defaultValue: Lorem}
+    _info:{type: DataTypes.TEXT, defaultValue: Lorem},
+    amount:{type: DataTypes.INTEGER, allowNull: false},
+    country:{type: DataTypes.INTEGER, allowNull: false},
+
 })
+
+
 
 const Type = sequelize.define('type', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
@@ -54,35 +59,62 @@ const OrderDevice = sequelize.define('order_device', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
-User.hasOne(Basket)
-Basket.belongsTo(User)
+const Legal = sequelize.define('legal', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    name: {type: DataTypes.STRING,  allowNull: false},
+    legal_p: {type: DataTypes.STRING,  allowNull: false},
+    descr: {type: DataTypes.STRING},
+    type: {type: DataTypes.STRING, allowNull: false},
+    phone: {type: DataTypes.STRING},
+    located: {type: DataTypes.STRING,  allowNull: false},
+    bill: {type: DataTypes.STRING,  allowNull: false},
+    inn: {type: DataTypes.STRING, allowNull: false},
+    comment: {type: DataTypes.STRING},
+})
 
-User.hasMany(Order)
-Order.belongsTo(User)
+const Review = sequelize.define('review', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    comment: {type: DataTypes.STRING, allowNull: false},
+    rate: {type: DataTypes.INTEGER, allowNull: false},
+})
 
-Order.hasMany(OrderDevice)
-OrderDevice.belongsTo(Order)
+User.hasOne(Basket);
+Basket.belongsTo(User);
 
-Basket.hasMany(BasketDevice)
-BasketDevice.belongsTo(Basket)
+User.hasMany(Order);
+Order.belongsTo(User);
 
-Order.hasOne(User)
-User.belongsTo(Order)
+Order.hasMany(OrderDevice);
+OrderDevice.belongsTo(Order);
 
-Type.hasMany(Device)
-Device.belongsTo(Type)
+Basket.hasMany(BasketDevice);
+BasketDevice.belongsTo(Basket);
 
-Brand.hasMany(Device)
-Device.belongsTo(Brand)
+Order.hasOne(User);
+User.belongsTo(Order);
+
+Type.hasMany(Device);
+Device.belongsTo(Type);
+
+Brand.hasMany(Device);
+Device.belongsTo(Brand);
 
 Device.hasMany(DeviceInfo, {as: 'info'});
-DeviceInfo.belongsTo(Device)
+DeviceInfo.belongsTo(Device);
 
 Device.hasMany(BasketDevice);
-BasketDevice.belongsTo(Device)
+BasketDevice.belongsTo(Device);
 Device.hasMany(OrderDevice);
-OrderDevice.belongsTo(Device)
+OrderDevice.belongsTo(Device);
 
+Legal.hasMany(Device);
+Device.belongsTo(Legal);
+
+User.hasMany(Review)
+Review.belongsTo(User)
+
+Device.hasMany(Review)
+Review.belongsTo(Device)
 
 
 module.exports = {
@@ -94,7 +126,9 @@ module.exports = {
     Brand,
     DeviceInfo,
     Order,
-    OrderDevice
+    OrderDevice,
+    Legal,
+    Review
 }
 
 

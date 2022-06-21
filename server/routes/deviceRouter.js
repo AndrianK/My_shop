@@ -7,5 +7,7 @@ router.post('/',checkRole('ADMIN'), deviceController.create)
 router.post('/update',checkRole('ADMIN'), deviceController.setDescription)
 router.get('/', deviceController.getAll)
 router.get('/:id', deviceController.getOne)
+router.get('/update/:id', deviceController.update)
+router.post('/del/:id', deviceController.delOne)
 
 module.exports = router

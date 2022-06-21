@@ -20,16 +20,35 @@ export const fetchBrands = async () => {
     const {data} = await $host.get('api/brand', )
     return data
 }
+export const fetchLegal = async () => {
+    const {data} = await $host.get('api/legal', )
+    return data
+}
+
+export const createLegal = async (legal) => {
+    const {data} = await $host.post('api/legal/new', legal)
+    return data
+}
+
 
 export const createDevice = async (device) => {
     const {data} = await $authHost.post('api/device', device)
     return data
 }
 
+export const delDevice = async (id) => {
+    const {data} = await $authHost.post('api/device/del/'+ id)
+    return data
+}
+export const updateAmount = async (id) => {
+    const {data} = await $authHost.post('api/update/del/'+ id)
+    return data
+}
+
+
 export const setDescription = async (_id, text) => {
     const {data} = await $authHost.post('api/device/update', _id, text)
     return data
-
 }
 
 export const fetchDevices = async (typeId, brandId, page, limit) => {
@@ -44,7 +63,7 @@ export const fetchOneDevice = async (id) => {
     return data
 }
 
-// ------ Добавляю подключение для добавление crud с корзиной ------- //
+// ------ Кошик ------- //
 
 export const addToBasket = async (deviceId) => {
     const {response} = await $authHost.post('api/basket', deviceId)
@@ -60,7 +79,7 @@ export const getBasket = async () => {
     const {data} = await $authHost.get('api/basket')
     return data
 }
-
+// ------ Замовлення ------- //
 export const addOrder = async (id, phone, postcode, addressee) => {
     const {data} = await $host.post('api/order', {
             id, phone, postcode, addressee
@@ -68,13 +87,18 @@ export const addOrder = async (id, phone, postcode, addressee) => {
     return data
 }
 
+export const getOrder = async (id) => {
+    if(!id)id = 0;
+    const {data} = await $authHost.get('api/order/')
+    return data
+}
+
+
 export const getUserOrder = async (id) => {
     if(!id)id = 0;
     const {data} = await $authHost.get('api/order/user/'+id, id)
     return data
 }
-
-
 
 export const getUserOrderList = async (id) => {
     if(!id)id = 0;
