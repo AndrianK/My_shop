@@ -3,10 +3,9 @@ import {Context} from "../index";
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import {Button, Container} from "react-bootstrap";
-import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, SHOP_ROUTE} from "../utils/consts";
+import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, ORDER_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import {observer} from "mobx-react-lite";
 import {useNavigate} from "react-router-dom";
-
 
 const NavBar = observer(() => {
     const {user} = useContext(Context)
@@ -23,9 +22,16 @@ const NavBar = observer(() => {
                 <label style={{color:'white'}} onClick={() => history(SHOP_ROUTE)}>Shop</label>
                 {user.isAuth ?
                     <Nav className="ml-auto" style={{color: 'white'}}>
+                        {user.isRole === 'ADMIN' && <Button
+                        variant={"outline-light"}
+                        onClick={() => history(ORDER_ROUTE)}
+                    >
+                        Замовлення
+                    </Button>}
                         {user.isRole === 'ADMIN'?<Button
                             variant={"outline-light"}
                             onClick={() => history(ADMIN_ROUTE)}
+                            className="ms-3"
                         >
                             Адмін панель
                         </Button>: <Button
@@ -37,7 +43,7 @@ const NavBar = observer(() => {
                         <Button
                             variant={"outline-light"}
                             onClick={() => logOut()}
-                            className="ms-2"
+                            className="ms-3"
                         >
                             Выйти
                         </Button>

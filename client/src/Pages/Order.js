@@ -1,77 +1,116 @@
-import React, {useEffect} from 'react';
-import {useContext, useState} from 'react';
-import {Context} from '../index';
-import {getUserOrderList, getUserOrder, getBasket} from '../http/deviceAPI';
-import {Button, Card, Col, Container, Row} from 'react-bootstrap'
-import {observer} from 'mobx-react-lite';
+import React, {useEffect, useRef} from 'react';
+import { useContext, useState } from 'react';
+import { Context } from '../';
+import {fetchBrands, fetchLegal, fetchTypes, getOrder, getUserOrderList} from '../http/deviceAPI';
+import {Button, Card, Col, Container, Dropdown, Row} from 'react-bootstrap'
+import { observer } from 'mobx-react-lite';
+import CreateOrder from "../components/modals/CreateOrder";
 
-
-import {DEVICE_ROUTE} from "../utils/consts";
-
-import {useNavigate} from "react-router-dom";
-
-
-const Orders = observer(() => {
-    const {device, user} = useContext(Context)
+const Basket = observer(() => {
+    const {device,user, a} = useContext(Context)
+    const [orderVisible, setOrderVisible] = useState(false)
+    const myRef = useRef(null)
     useEffect(() => {
-        getUserOrderList(device.setOrdersList).then(data => device.setOrderList(data))
-
-    }, [])
-
+        getOrder(user.isUser).then(data => device.setOrders(data))
+        getUserOrderList(device._selectedOrder).then(data => device.setOrdersList(data))
+    }, [device,device._selectedOrder, a])
 
     // ----- Считаем общую сумму, которую юзер набрал в корзину ------- //
 
     let prices = 0;
-    {
-        device.order.map(price =>
-            prices += price.device.price
-        )
-    }
+    {device._orders_lists.map(price =>
+        prices += price.device.price
+    )}
     return (
         <Container
             className="d-flex flex-sm-column justify-content-center align-items-center mt-3"
         >
-            {device.order.map(product =>
-                    <Row>
+            <h1 className="pb-2">Засмовлення</h1>
 
-                        <Col><h3>{product.postcode}</h3></Col>
-                        <Col>
-                            {{
-                                '0': <h3> Відхилено</h3>,
-                                '1': <h3> Чекає затвердженя</h3>,
-                                '2': <h3> Відправлено</h3>,
-                                '3': <h3> Доставлено</h3>
-                            }[product.status]}
-                        </Col>
-                        <Col>
-                            <Button variant={"outline-dark"} onClick={() => {
-                                device.setSelectedOrder(product.id)
-                            }}>Открыть</Button>
-                        </Col>
-                    </Row>)}
+            {/* ------- Считаем общую сумму ------- */}
+
+
+
+
+            <Row> <Button variant={"outline-dark"} onClick={() => setOrderVisible(true)}>Отправить заказ</Button> </Row>
+
+            <h1 className="pt-5 pb-2">Усі замовлення</h1>
+
+
             {device.order.map(product =>
-                <Row md={3} className={"mt-3"} onClick={() => useNavigate(DEVICE_ROUTE + '/' + product.device.id)}>
-                    <Card style={{border: '1px solid lightgray', width: 160, cursor: 'pointer'}}>
-                            <Col md="2" className="d-inline-flex flex-row">
-                                <div className="flex-row">
-                                    <img src={process.env.REACT_APP_API_URL + product.device.img}
-                                         alt="img not found" height={100}/>
-                                </div>
+
+
+                <Card className="d-flex w-100 pb-3  m-3">
+                    <Row d-flex>
+                        <Row className="row pb-1 m-3 ">
+
+                            <Col className={"mt-3"}>Addressee</Col>
+                            <Col className={"mt-3"}>Postcode</Col>
+                            <Col className={"mt-3"}>Status</Col>
+                        </Row>
+                        <Row className="row pb-1 m-3 ">
+                            <Col><h3>{product.addressee}</h3></Col>
+                            <Col><h3>{product.postcode}</h3></Col>
+                            <Col>
+                                {{
+                                    '0': <h3> Closed</h3>,
+                                    '1': <h3> Stay</h3>,
+                                    '2': <h3> Go</h3>,
+                                    '3': <h3> Complete</h3>
+                                }[product.status]}
+                                <Button className="w-75 align-self-center ms" onClick={() => device.setSelectedOrder(product.id)}> Open </Button>
+{/*                                <Dropdown className="mt-2 mb-2">
+                                    <Dropdown.Toggle>{device.status || "Оберіть статус"}</Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        {device.order.map(order =>
+                                            <Dropdown.Item
+                                                key={order.id}
+                                            >
+                                                {{
+                                                    '0': <h3> Closed</h3>,
+                                                    '1': <h3> Stay</h3>,
+                                                    '2': <h3> Go</h3>,
+                                                    '3': <h3> Complete</h3>
+                                                }[order.status]}
+                                            </Dropdown.Item>
+                                        )}
+                                    </Dropdown.Menu>
+                                </Dropdown>*/}
                             </Col>
-                            <Col className="d-flex flex-row">
-                                <div className="flex-row">
-                                    <h1 className="ms-3">{product.device.name}</h1>
-                                </div>
-                            </Col>
-                            <Col className="d-flex flex-row justify-content-end">
-                                <div className="flex-row">
-                                    <h2 className="font-weight-light">{product.device.price} Гривен</h2>
-                                </div>
-                            </Col>
-                    </Card>
-                </Row>)}
+                        </Row>
+
+                    </Row>
+                    {product.id == device.selectedOrder &&
+                            device.selectedOrder &&
+                                <Row className="  row pb-1 m-3">
+                                    <Col className={"mt-3"}>id</Col>
+                                    <Col className={"mt-3"}>Name</Col>
+                                    <Col className={"mt-3"}>Price</Col>
+                                </Row>
+                            }
+                    {product.id == device.selectedOrder &&
+                    device._orders_lists.map
+                    (product =>
+
+                        <Card className="  p-2 row m-3  ">
+                            <Row className="row">
+                                <Col className={"mt-3"}>{product.device.id}</Col>
+                                <Col className={"mt-3"}>{product.device.name}</Col>
+                                <Col className={"mt-3"}>{product.device.price}</Col>
+                            </Row>
+                        </Card>
+                    )}
+                    {product.id == device.selectedOrder &&
+                    <Card className="d-flex flex-row  p-2 justify-content-between align-items-center mb-1 m-3">
+                        <h1 className="align-self-end" >Усього:</h1>
+                        <h3  className="ms-3 align-self-end">{prices}<span className="font-weight-light pl-2"> $$$ </span></h3>
+                    </Card>}
+                </Card>
             )}
-        </Container>)
-})
 
-export default Orders;
+        </Container>
+    );
+
+});
+
+export default Basket;

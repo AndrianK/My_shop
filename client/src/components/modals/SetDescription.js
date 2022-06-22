@@ -33,7 +33,7 @@ const SetDescription = ({show, onHide}) => {
                     <Form.Control
                         value={value}
                         onChange={e => setValue(e.target.value)}
-                        placeholder={"Введите название типа"}
+                        placeholder={"Введіть новий опис"}
                         style={{height:"auto"}}
                     />
                 </Form>

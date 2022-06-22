@@ -78,18 +78,18 @@ class DeviceController {
         )
         return res.json(device)
     }
+
     async delOne(req, res) {
         const {id} = req.params
-        const device = await Device.destroy(
-            {
-                where: {id: id}
-            },
-
+        const device = await Device.update(
+            {amount: '0'},
+            {where: {id: id}}
         )
         return res.json(device)
     }
-    async update(req, res) {
-        const {_id,_amount} = req.params
+
+    async updated(req, res) {
+        const {_id,_amount} = req.body
         const device = await Device.update(
             {amount: _amount},
             {where: {id: _id}}

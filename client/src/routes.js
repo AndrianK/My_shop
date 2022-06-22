@@ -36,7 +36,7 @@ export const publicRoutes = [
   path: DEVICE_ROUTE + '/:id',
       Component: DevicePage
 },{
-        path: ORDER_ROUTE + '/:id',
+        path: ORDER_ROUTE,
         Component: Order
     },
 

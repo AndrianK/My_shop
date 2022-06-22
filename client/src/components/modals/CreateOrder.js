@@ -17,6 +17,7 @@ const CreateOrder = observer(({show, onHide}) => {
         const formData = new FormData()
         try{
             addOrder(id, phone, postcode, addressee).then(data => onHide())
+            window.location.reload()
         } catch(e){
             alert(e)
         }
@@ -30,7 +31,7 @@ const CreateOrder = observer(({show, onHide}) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Добавить устройство
+                    Заповнити запит
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -39,19 +40,19 @@ const CreateOrder = observer(({show, onHide}) => {
                         value={phone}
                         onChange={e => setPhone(e.target.value)}
                         className="mt-3"
-                        placeholder="Введите название устройства"
+                        placeholder="Введіть номер телефону"
                     />
                     <Form.Control
                         value={postcode}
                         onChange={e => setPostcode(e.target.value)}
                         className="mt-3"
-                        placeholder="Введите стоимость устройства"
+                        placeholder="Введіть адресу діставки"
                     />
                     <Form.Control
                         value={addressee}
                         onChange={e => setAddressee(e.target.value)}
                         className="mt-3"
-                        placeholder="Введите стоимость устройства"
+                        placeholder="Введите ФИО отримувача"
                     />
                     <hr/>
                 </Form>

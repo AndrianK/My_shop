@@ -5,6 +5,7 @@ import CreateDevice from "../components/modals/CreateDevice";
 import CreateType from "../components/modals/CreateType";
 import CreateLegal from "../components/modals/CreateLegal";
 import {observer} from "mobx-react-lite";
+import {ORDER_ROUTE} from "../utils/consts";
 
 
 const Admin = observer( () => {
@@ -22,19 +23,20 @@ const Admin = observer( () => {
             >
                 Добати тип
             </Button>
-            <Button
-                variant={"outline-dark"}
-                className="mt-4 p-2"
-                onClick={() => setLegalVisible(true)}
-            >
-                Додати виробника
-            </Button>
+
             <Button
                 variant={"outline-dark"}
                 className="mt-4 p-2"
                 onClick={() => setBrandVisible(true)}
             >
                 Додати бренд
+            </Button>
+            <Button
+                variant={"outline-dark"}
+                className="mt-4 p-2"
+                onClick={() => setLegalVisible(true)}
+            >
+                Додати виробника
             </Button>
             <Button
                 variant={"outline-dark"}

@@ -5,8 +5,6 @@ import {addToBasket, deleteFromBasket, getBasket, getUserOrder, getUserOrderList
 import {Button, Card, Col, Container, Row} from 'react-bootstrap'
 import { observer } from 'mobx-react-lite';
 import CreateOrder from "../components/modals/CreateOrder";
-import {useNavigate} from "react-router-dom";
-
 
 const Basket = observer(() => {
     const {device,user, a} = useContext(Context)
@@ -17,9 +15,12 @@ const Basket = observer(() => {
         getUserOrderList(device._selectedOrder).then(data => device.setOrdersList(data))
     }, [device,device._selectedOrder, a])
 
+const refreshPage = ()=>{
+    window.location.reload();
+}
     const _delete = (id) => {
-        deleteFromBasket(id).then(response => alert(`Товар удален из корзины`));
-        a._reload=a+1;
+        deleteFromBasket(id).then(response => alert(`Товар видалено з кошика`)).then(response => refreshPage())
+
     }
 
     // ----- Считаем общую сумму, которую юзер набрал в корзину ------- //
@@ -27,6 +28,10 @@ const Basket = observer(() => {
     let prices = 0;
     {device.basket.map(price =>
         prices += price.device.price
+    )}
+    let prices2 = 0;
+     {device._orders_lists.map(price =>
+        prices2 += price.device.price
     )}
     return (
         <Container
@@ -68,19 +73,23 @@ const Basket = observer(() => {
                 </Card>
             )}
 
-            <Row> <Button variant={"outline-dark"} onClick={() => setOrderVisible(true)}>Отправить заказ</Button> </Row>
+            <Row> <Button variant={"outline-dark"} onClick={() => setOrderVisible(true)} >Отправить заказ</Button> </Row>
 
             <h1 className="pt-5 pb-2">Попередні замовлення</h1>
 
-            <Row className=" w-100 row pb-1">
-                <Col className={"mt-3"}>Addressee</Col>
-                <Col className={"mt-3"}>Postcode</Col>
-                <Col className={"mt-3"}>Status</Col>
-            </Row>
+
             {device.order.map(product =>
 
-                <Card className="d-flex w-100 pb-3">
-                    <Row d-flex>
+
+                <Card className="d-flex w-100 pb-3 m-lg-2">
+                    <Row className=" d-flex m-3">
+                        <Row className=" w-100 row pb-1">
+
+                            <Col className={"mt-3"}>Addressee</Col>
+                            <Col className={"mt-3"}>Postcode</Col>
+                            <Col className={"mt-3"}>Status</Col>
+                        </Row>
+                        <Row>
                         <Col><h3>{product.addressee}</h3></Col>
                         <Col><h3>{product.postcode}</h3></Col>
                         <Col>
@@ -92,30 +101,38 @@ const Basket = observer(() => {
                             }[product.status]}
                             <Button className="w-75 align-self-center ms" onClick={() => device.setSelectedOrder(product.id)}> Open </Button>
                         </Col>
+                        </Row>
 
                     </Row>
-
-                </Card>
-            )}
-            <Row className=" w-100 row pb-1">
-                <Col className={"mt-3"}>id</Col>
-                <Col className={"mt-3"}>Name</Col>
-                <Col className={"mt-3"}>Price</Col>
-            </Row>
-
-            {device._orders_lists.map
-                (product =>
-                    <Col className=" w-100">
-
-                        <Card className=" w-100 row">
+                    {product.id == device.selectedOrder &&
+                    <Row className=" d-flex mb-2 p-4 w-100  m-3">
+                        <Col className={"mt-3"}>id</Col>
+                        <Col className={"mt-3"}>Name</Col>
+                        <Col className={"mt-3"}>Price</Col>
+                    </Row>}
+                    {product.id == device.selectedOrder &&
+                    device._orders_lists.map
+                    (product =>
+                        <Card className=" d-flex mb-2 p-4 m-3  ">
                             <Row className="row">
                                 <Col className={"mt-3"}>{product.device.id}</Col>
                                 <Col className={"mt-3"}>{product.device.name}</Col>
                                 <Col className={"mt-3"}>{product.device.price}</Col>
                             </Row>
                         </Card>
-                    </Col>
-                )}
+                    )}
+                    {product.id == device.selectedOrder &&
+                    <Card className="d-flex flex-row  p-2 m-3 justify-content-between align-items-center mb-2">
+                        <h1 className="align-self-end" >Усього:</h1>
+                        <h3  className="ms-3 align-self-end">{prices2}<span className="font-weight-light pl-2"> $$$ </span></h3>
+                    </Card>}
+
+                </Card>
+            )}
+
+
+
+
             <CreateOrder show={orderVisible} onHide={() => setOrderVisible(false)}/>
         </Container>
     );

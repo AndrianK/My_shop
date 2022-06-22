@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
+import {Button, Card, Col, Container, Form, Image, Row} from "react-bootstrap";
 import bigStar from '../assets/bigStar.png';
 import {useParams} from 'react-router-dom';
-import {addToBasket, delDevice, fetchOneDevice} from "../http/deviceAPI";
+import {addToBasket, delDevice, fetchOneDevice, setDescription, updateAmount} from "../http/deviceAPI";
 import {observer} from "mobx-react-lite";
 import {useContext} from "react";
 import {Context} from "../index";
@@ -17,6 +17,12 @@ const DevicePage = observer(() => {
     useEffect(() => {
         fetchOneDevice(id).then(data => setDevice(data))
     }, [])
+
+    const [value, setValue] = useState('')
+
+    const Amount = () => {
+        updateAmount(id, value).then(response => alert(`Кількість товару оновлено`))
+    }
 
 
     // ------- Функція додання у кошик ------- //
@@ -82,7 +88,29 @@ const DevicePage = observer(() => {
                 >
                     Видалити
                 </Button>
+                <Row>
+                    <Col>
+                        <Form>
+                        <Form.Control
+                            value={value}
+                            onChange={e => setValue(e.target.value)}
+                            placeholder={"Введіть кількість"}
+                            style={{height:"auto"}}
+                            className="mt-4 w-100 p-2"
+                        />
+                    </Form>
+                    </Col>
+               <Col>
+                   <Button
+                   variant={"outline-dark"}
+                   className="mt-4 w-100 p-2"
+                   onClick={Amount}
+               >
+                   Оновити кількість
+               </Button>
+               </Col>
 
+                </Row>
                 <SetDescription show={deviceVisible} onHide={() => setDeviceVisible(false)}/>
             </Row>:<br/>
         }

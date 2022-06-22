@@ -66,7 +66,7 @@ const CreateDevice = observer(({show, onHide}) => {
             <Modal.Body>
                 <Form>
                     <Dropdown className="mt-2 mb-2">
-                        <Dropdown.Toggle>{device.selectedType.name || "Выберите тип"}</Dropdown.Toggle>
+                        <Dropdown.Toggle>{device.selectedType.name || "Оберіть тип"}</Dropdown.Toggle>
                         <Dropdown.Menu>
                             {device.types.map(type =>
                                 <Dropdown.Item
@@ -79,7 +79,7 @@ const CreateDevice = observer(({show, onHide}) => {
                         </Dropdown.Menu>
                     </Dropdown>
                     <Dropdown className="mt-2 mb-2">
-                        <Dropdown.Toggle>{device.selectedBrand.name || "Выберите тип"}</Dropdown.Toggle>
+                        <Dropdown.Toggle>{device.selectedBrand.name || "Оберіть бренд"}</Dropdown.Toggle>
                         <Dropdown.Menu>
                             {device.brands.map(brand =>
                                 <Dropdown.Item
@@ -92,7 +92,7 @@ const CreateDevice = observer(({show, onHide}) => {
                         </Dropdown.Menu>
                     </Dropdown>
                     <Dropdown className="mt-2 mb-2">
-                        <Dropdown.Toggle>{device.selectedLegal.name || "Выберите тип"}</Dropdown.Toggle>
+                        <Dropdown.Toggle>{device.selectedLegal.name || "Оберіть виробника"}</Dropdown.Toggle>
                         <Dropdown.Menu>
                             {device.legals.map(legal=>
                                 <Dropdown.Item
@@ -132,7 +132,7 @@ const CreateDevice = observer(({show, onHide}) => {
                         value={country}
                         onChange={e => setCountry(e.target.value)}
                         className="mt-3"
-                        placeholder="Введіть назву"
+                        placeholder="Введіть країну виробництва"
                     />
                     <hr/>
                     <Button

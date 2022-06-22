@@ -40,11 +40,6 @@ export const delDevice = async (id) => {
     const {data} = await $authHost.post('api/device/del/'+ id)
     return data
 }
-export const updateAmount = async (id) => {
-    const {data} = await $authHost.post('api/update/del/'+ id)
-    return data
-}
-
 
 export const setDescription = async (_id, text) => {
     const {data} = await $authHost.post('api/device/update', _id, text)
@@ -88,7 +83,6 @@ export const addOrder = async (id, phone, postcode, addressee) => {
 }
 
 export const getOrder = async (id) => {
-    if(!id)id = 0;
     const {data} = await $authHost.get('api/order/')
     return data
 }
@@ -103,5 +97,16 @@ export const getUserOrder = async (id) => {
 export const getUserOrderList = async (id) => {
     if(!id)id = 0;
     const {data} = await $authHost.get('api/order/'+id, id)
+    return data
+}
+
+export const updateUserOrder = async (id, status) => {
+    if(!id)id = 0;
+    const {data} = await $authHost.post('api/order/update/'+id, {params:{id, status}})
+    return data
+}
+
+export const updateAmount = async (_id, _amount) => {
+    const {data} = await $authHost.post('api/device/update/'+_id, {_id, _amount})
     return data
 }

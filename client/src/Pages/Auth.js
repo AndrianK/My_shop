@@ -40,7 +40,7 @@ const Auth = observer(() => {
             style={{height: window.innerHeight - 54}}
         >
             <Card style={{width: 600}} className="p-5">
-                <h2 className="m-auto">{isLogin ? 'Авторизация' : "Регистрация"}</h2>
+                <h2 className="m-auto">{isLogin ? 'Авторизація' : "Регистраія"}</h2>
                 <Form className="d-flex flex-column">
                     <Form.Control
                         className="mt-3"
@@ -58,11 +58,11 @@ const Auth = observer(() => {
                     <Row className="justify-content-end mt-3 pl-3 pr-3">
                         {isLogin ?
                             <div>
-                                Нет аккаунта? <NavLink to={REG_ROUTE}>Зарегистрируйся!</NavLink>
+                                Відсутній акаунт? <NavLink to={REG_ROUTE}>Зарегистрируйся!</NavLink>
                             </div>
                             :
                             <div>
-                                Есть аккаунт? <NavLink to={LOGIN_ROUTE}>Войдите!</NavLink>
+                                Вже є акаунт? <NavLink to={LOGIN_ROUTE}>Увійди!</NavLink>
                             </div>
                         }
                         <Button
