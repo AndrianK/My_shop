@@ -53,20 +53,20 @@ const DevicePage = observer(() => {
                 </Col>
             </Row><br/>
             <Row>
-                <Col >
+                <Col className={"w-75"}>
                     <label >
                         {device._info}
                     </label>
                 </Col>
                 <Col md={3}>
                 <Card
-                    className="d-flex flex-column align-items-center align-self-end p-3"
-                    style={{width: 300, fontSize: 32, border: '5px solid lightgray'}}
+                    className="d-flex flex-column align-items-center align-self-end p-3 "
+                    style={{width: 300, fontSize: 32, border: '5px solid light'}}
                 >
-                    <h3>От: {device.price} Грн.</h3>
+                    <h3>Від: {device.price} Грн.</h3>
 
 
-                    <Button variant={"outline-dark"} onClick={add}>Додати в кошик</Button>
+                    <Button variant={"outline-dark"} className="bg-success text-light" onClick={add}>Додати до кошику</Button>
 
                 </Card>
                 </Col>
@@ -76,14 +76,14 @@ const DevicePage = observer(() => {
 
                 <Button
                     variant={"outline-dark"}
-                    className="mt-4 p-2"
+                    className="mt-4 p-2 bg-primary text-light"
                     onClick={() => setDeviceVisible(true)}
                 >
                     Додати опис
                 </Button>
                 <Button
                     variant={"outline-dark"}
-                    className="mt-4 p-2"
+                    className="mt-4 p-2 bg-danger text-light"
                     onClick={() => delDevice(id).then(response => alert(`Товар було видалено!`)) }
                 >
                     Видалити
@@ -94,7 +94,7 @@ const DevicePage = observer(() => {
                         <Form.Control
                             value={value}
                             onChange={e => setValue(e.target.value)}
-                            placeholder={"Введіть кількість"}
+                            placeholder={"Введіть кількість "}
                             style={{height:"auto"}}
                             className="mt-4 w-100 p-2"
                         />
@@ -102,8 +102,8 @@ const DevicePage = observer(() => {
                     </Col>
                <Col>
                    <Button
-                   variant={"outline-dark"}
-                   className="mt-4 w-100 p-2"
+                       variant={"outline-dark"}
+                   className="mt-4 w-100 p-2 bg-success text-light"
                    onClick={Amount}
                >
                    Оновити кількість

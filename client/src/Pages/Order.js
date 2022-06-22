@@ -25,15 +25,6 @@ const Basket = observer(() => {
         <Container
             className="d-flex flex-sm-column justify-content-center align-items-center mt-3"
         >
-            <h1 className="pb-2">Засмовлення</h1>
-
-            {/* ------- Считаем общую сумму ------- */}
-
-
-
-
-            <Row> <Button variant={"outline-dark"} onClick={() => setOrderVisible(true)}>Отправить заказ</Button> </Row>
-
             <h1 className="pt-5 pb-2">Усі замовлення</h1>
 
 

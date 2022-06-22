@@ -66,14 +66,14 @@ const refreshPage = ()=>{
                                 </Col>
                             <Col  className="d-flex flex-row justify-content-end">
                                 <div className="flex-row">
-                                    <Button onClick={() => _delete(product.id)}> Delete </Button>
+                                    <Button className="bg-danger" onClick={() => _delete(product.id)}> Delete </Button>
                                 </div>
                             </Col>
                         </Row>
                 </Card>
             )}
 
-            <Row> <Button variant={"outline-dark"} onClick={() => setOrderVisible(true)} >Отправить заказ</Button> </Row>
+            <Row> <Button className="bg-success" onClick={() => setOrderVisible(true)} >Надіслати замовлення</Button> </Row>
 
             <h1 className="pt-5 pb-2">Попередні замовлення</h1>
 
@@ -81,7 +81,7 @@ const refreshPage = ()=>{
             {device.order.map(product =>
 
 
-                <Card className="d-flex w-100 pb-3 m-lg-2">
+                <Card className="d-flex w-100 pb-3  m-3">
                     <Row className=" d-flex m-3">
                         <Row className=" w-100 row pb-1">
 
@@ -106,18 +106,19 @@ const refreshPage = ()=>{
                     </Row>
                     {product.id == device.selectedOrder &&
                     <Row className=" d-flex mb-2 p-4 w-100  m-3">
-                        <Col className={"mt-3"}>id</Col>
                         <Col className={"mt-3"}>Name</Col>
                         <Col className={"mt-3"}>Price</Col>
+                        <Col className={"mt-3"}>Country</Col>
                     </Row>}
                     {product.id == device.selectedOrder &&
                     device._orders_lists.map
                     (product =>
                         <Card className=" d-flex mb-2 p-4 m-3  ">
                             <Row className="row">
-                                <Col className={"mt-3"}>{product.device.id}</Col>
+
                                 <Col className={"mt-3"}>{product.device.name}</Col>
                                 <Col className={"mt-3"}>{product.device.price}</Col>
+                                <Col className={"mt-3"}>{product.device.country}</Col>
                             </Row>
                         </Card>
                     )}
