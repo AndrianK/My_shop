@@ -5,6 +5,7 @@ import {addToBasket, deleteFromBasket, getBasket, getUserOrder, getUserOrderList
 import {Button, Card, Col, Container, Row} from 'react-bootstrap'
 import { observer } from 'mobx-react-lite';
 import CreateOrder from "../components/modals/CreateOrder";
+import Image from "react-bootstrap/Image";
 
 const Basket = observer(() => {
     const {device,user, a} = useContext(Context)
@@ -108,7 +109,7 @@ const refreshPage = ()=>{
                     <Row className=" d-flex mb-2 p-4 w-100  m-3">
                         <Col className={"mt-3"}>Name</Col>
                         <Col className={"mt-3"}>Price</Col>
-                        <Col className={"mt-3"}>Country</Col>
+                        <Col className={"mt-3"}>Image</Col>
                     </Row>}
                     {product.id == device.selectedOrder &&
                     device._orders_lists.map
@@ -118,7 +119,7 @@ const refreshPage = ()=>{
 
                                 <Col className={"mt-3"}>{product.device.name}</Col>
                                 <Col className={"mt-3"}>{product.device.price}</Col>
-                                <Col className={"mt-3"}>{product.device.country}</Col>
+                                <Col className={"mt-3"}><Image width={75} height={75} src={process.env.REACT_APP_API_URL + product.device.img}/></Col>
                             </Row>
                         </Card>
                     )}

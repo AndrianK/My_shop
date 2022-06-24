@@ -21,7 +21,7 @@ const Admin = observer( () => {
                 className="mt-4 p-2"
                 onClick={() => setTypeVisible(true)}
             >
-                Добати тип
+                Додати тип
             </Button>
 
             <Button

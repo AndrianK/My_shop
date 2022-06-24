@@ -124,7 +124,7 @@ const CreateDevice = observer(({show, onHide}) => {
                         placeholder="Введіть кількість"
                     />
                     <Form.Control
-                        className="mt-3"
+                        className="mt-3 ua"
                         type="file"
                         onChange={selectFile}
                     />
@@ -162,7 +162,7 @@ const CreateDevice = observer(({show, onHide}) => {
                                     onClick={() => removeInfo(i.number)}
                                     variant={"outline-danger"}
                                 >
-                                    Удалить
+                                    Видалити
                                 </Button>
                             </Col>
                         </Row>
@@ -170,8 +170,8 @@ const CreateDevice = observer(({show, onHide}) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="outline-danger" onClick={onHide}>Закрыть</Button>
-                <Button variant="outline-success" onClick={addDevice}>Добавить</Button>
+                <Button variant="outline-danger" onClick={onHide}>Закрити</Button>
+                <Button variant="outline-success" onClick={addDevice}>Додати</Button>
             </Modal.Footer>
         </Modal>
     );

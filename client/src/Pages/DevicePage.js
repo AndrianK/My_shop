@@ -47,7 +47,7 @@ const DevicePage = observer(() => {
                             background: index % 2 === 0 ? 'lightgray' : 'transparent',
                             padding: 10
                         }}>
-                            {info.title}: {info.description}
+                            <Col>{info.title}</Col><Col> : {info.description}</Col>
                         </Row>
                     )}
                 </Col>

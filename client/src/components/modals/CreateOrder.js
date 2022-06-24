@@ -52,14 +52,14 @@ const CreateOrder = observer(({show, onHide}) => {
                         value={addressee}
                         onChange={e => setAddressee(e.target.value)}
                         className="mt-3"
-                        placeholder="Введите ФИО отримувача"
+                        placeholder="Введіть ПИБ отримувача"
                     />
                     <hr/>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="outline-danger" onClick={onHide}>Закрыть</Button>
-                <Button variant="outline-success" onClick={createOrder}>Отправить</Button>
+                <Button variant="outline-danger" onClick={onHide}>Закрити</Button>
+                <Button variant="outline-success" onClick={createOrder}>Відправити</Button>
             </Modal.Footer>
         </Modal>
     );
