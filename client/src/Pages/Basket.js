@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useContext, useState } from 'react';
 import { Context } from '../';
-import {addToBasket, deleteFromBasket, getBasket, getUserOrder, getUserOrderList} from '../http/deviceAPI';
+import { deleteFromBasket, getBasket, getUserOrder, getUserOrderList} from '../http/deviceAPI';
 import {Button, Card, Col, Container, Row} from 'react-bootstrap'
 import { observer } from 'mobx-react-lite';
 import CreateOrder from "../components/modals/CreateOrder";
@@ -67,14 +67,14 @@ const refreshPage = ()=>{
                                 </Col>
                             <Col  className="d-flex flex-row justify-content-end">
                                 <div className="flex-row">
-                                    <Button className="bg-danger" onClick={() => _delete(product.id)}> Delete </Button>
+                                    <Button className="bg-danger border-white" onClick={() => _delete(product.id)}> Delete </Button>
                                 </div>
                             </Col>
                         </Row>
                 </Card>
             )}
 
-            <Row> <Button className="bg-success" onClick={() => setOrderVisible(true)} >Надіслати замовлення</Button> </Row>
+            <Row> <Button className="bg-success border-dark" onClick={() => setOrderVisible(true)} >Надіслати замовлення</Button> </Row>
 
             <h1 className="pt-5 pb-2">Попередні замовлення</h1>
 

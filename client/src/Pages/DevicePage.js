@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Card, Col, Container, Form, Image, Row} from "react-bootstrap";
-import bigStar from '../assets/bigStar.png';
 import {useParams} from 'react-router-dom';
-import {addToBasket, delDevice, fetchOneDevice, setDescription, updateAmount} from "../http/deviceAPI";
+import {addToBasket, delDevice, fetchOneDevice, setVisuable, updateAmount} from "../http/deviceAPI";
 import {observer} from "mobx-react-lite";
 import {useContext} from "react";
 import {Context} from "../index";
@@ -29,7 +28,9 @@ const DevicePage = observer(() => {
     const add = () => {
         const formData = new FormData()
         formData.append('deviceId', id)
-        addToBasket(formData).then(response => alert(`Товар ` + device.name + ` был добавлен в вашу корзину!`))
+        if(device.amount){
+        addToBasket(formData).then(response => alert(`Товар ` + device.name + ` було додано у ваш кошик!`))
+        } else alert("Немає в наявності")
     }
 
     return (
@@ -84,9 +85,18 @@ const DevicePage = observer(() => {
                 <Button
                     variant={"outline-dark"}
                     className="mt-4 p-2 bg-danger text-light"
-                    onClick={() => delDevice(id).then(response => alert(`Товар було видалено!`)) }
+                    //onClick={() => delDevice(id).then(response => alert(`Товар було видалено!`)) }
+                    onClick={() => delDevice(id).then(response => alert(response))}
                 >
                     Видалити
+                </Button>
+                <Button
+                    variant={"outline-dark"}
+                    className="mt-4 p-2 bg-secondary text-light"
+
+                    onClick={() => setVisuable(id).then(response => alert(response))}
+                >
+                    Приховати/Розмістити
                 </Button>
                 <Row>
                     <Col>

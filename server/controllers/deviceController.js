@@ -1,7 +1,8 @@
 const uuid = require('uuid')
 const path = require('path');
-const {Device, DeviceInfo} = require('../models/models')
+const {Device, DeviceInfo, OrderDevice, Basket, BasketDevice} = require('../models/models')
 const ApiError = require('../error/ApiError');
+const {decode} = require("jsonwebtoken");
 
 
 class DeviceController {
@@ -43,24 +44,48 @@ class DeviceController {
 
     async getAll(req, res) {
         try{
-            let {brandId, typeId, limit, page} = req.query
+            let {brandId, typeId, limit, page, role} = req.query
             page = page || 1
 
             limit = limit || 2
 
             let offset = page * limit - limit
             let devices;
-            if (!brandId && !typeId) {
-                devices = await Device.findAndCountAll({limit, offset})
-            }
-            if (brandId && !typeId) {
-                devices = await Device.findAndCountAll({where:{brandId}, limit, offset})
-            }
-            if (!brandId && typeId) {
-                devices = await Device.findAndCountAll({where:{typeId}, limit, offset})
-            }
-            if (brandId && typeId) {
-                devices = await Device.findAndCountAll({where:{typeId, brandId}, limit, offset})
+            if (role == "false") {
+                if (!brandId && !typeId) {
+                    devices = await Device.findAndCountAll({where: { visuable: true}, limit, offset})
+                }
+                if (brandId && !typeId) {
+                    devices = await Device.findAndCountAll({where: {brandId, visuable: true}, limit, offset,})
+                }
+                if (!brandId && typeId) {
+                    devices = await Device.findAndCountAll({where: {typeId, visuable: true}, limit, offset})
+                }
+                if (brandId && typeId) {
+                    devices = await Device.findAndCountAll({
+                        where: {typeId, brandId, visuable: true},
+                        limit,
+                        offset
+                    })
+                }
+            } else
+            {
+                if (!brandId && !typeId) {
+                    devices = await Device.findAndCountAll({limit, offset})
+                }
+                if (brandId && !typeId) {
+                    devices = await Device.findAndCountAll({where: {brandId}, limit, offset,})
+                }
+                if (!brandId && typeId) {
+                    devices = await Device.findAndCountAll({where: {typeId}, limit, offset})
+                }
+                if (brandId && typeId) {
+                    devices = await Device.findAndCountAll({
+                        where: {typeId, brandId},
+                        limit,
+                        offset
+                    })
+                }
             }
             return res.json(devices)
         } catch(e) {
@@ -81,10 +106,18 @@ class DeviceController {
 
     async delOne(req, res) {
         const {id} = req.params
-        const device = await Device.update(
-            {amount: '0'},
-            {where: {id: id}}
+        let device
+        const order = await OrderDevice.findAll(
+            {where: {deviceId: id}}
         )
+        const basket = await BasketDevice.findAll(
+            {where: {deviceId: id}}
+        )
+        if(order.length < 1 && basket.length < 1){
+        device = await Device.destroy(
+            {where: {id: id}}
+        ); device = "Пристрій видалено"
+        } else device = "Пристрій міститься в корзині, або замовленні. Приховайте товар чи зменшіть кількість до нуля"
         return res.json(device)
     }
 
@@ -94,6 +127,29 @@ class DeviceController {
             {amount: _amount},
             {where: {id: _id}}
         )
+        return res.json(device)
+    }
+    async setVisuable(req, res) {
+        const {id} = req.params
+        let a = true, device;
+        const device1 = await Device.findOne({where: {id: id}})
+        if (device1.visuable == true) {
+        Device.update(
+            {visuable: false},
+            {where: {id: id}})
+            device = "Пристрій приховано з сайту"
+        }
+        else{  await Device.update(
+            {visuable: true},
+            {where: {id: id}})
+            device = "Пристрій додано на сайт"
+        }
+
+
+        /*const device = await Device.update(
+            {visuable: !visuable},
+            {where: {id: _id}}
+        )*/
         return res.json(device)
     }
 }

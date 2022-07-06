@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import Modal from "react-bootstrap/Modal";
 import {Button, Form} from "react-bootstrap";
-import {createBrand} from "../../http/deviceAPI";
+import {createBrand, updateType} from "../../http/deviceAPI";
 
-const CreateBrand = ({show, onHide}) => {
+const CreateBrand = ({show, onHide, location}) => {
     const [value, setValue] = useState('')
 
     const addBrand = () => {
@@ -34,7 +34,8 @@ const CreateBrand = ({show, onHide}) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="outline-danger" onClick={onHide}>Закрити</Button>
-                <Button variant="outline-success" onClick={addBrand}>Додати</Button>
+                {location === "ADD" && <Button variant="outline-success" onClick={addBrand}>Додати</Button>}
+                {location === "UPD" && <Button variant="outline-success" onClick={updateType}>Оновити</Button>}
             </Modal.Footer>
         </Modal>
     );

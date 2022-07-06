@@ -9,5 +9,6 @@ router.get('/', deviceController.getAll)
 router.get('/:id', deviceController.getOne)
 router.post('/update/:id',checkRole('ADMIN'), deviceController.updated)
 router.post('/del/:id',checkRole('ADMIN'), deviceController.delOne)
+router.post('/visuable/:id',checkRole('ADMIN'), deviceController.setVisuable)
 
 module.exports = router

@@ -38,7 +38,7 @@ const CreateDevice = observer(({show, onHide}) => {
         const formData = new FormData()
         try{
             formData.append('name', name)
-            formData.append('country', 10)
+            formData.append('country', country)
             formData.append('price', `${price}`)
             formData.append('img', file)
             formData.append('amount', `${amount}`)

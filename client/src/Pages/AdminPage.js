@@ -5,7 +5,6 @@ import CreateDevice from "../components/modals/CreateDevice";
 import CreateType from "../components/modals/CreateType";
 import CreateLegal from "../components/modals/CreateLegal";
 import {observer} from "mobx-react-lite";
-import {ORDER_ROUTE} from "../utils/consts";
 
 
 const Admin = observer( () => {
@@ -45,10 +44,12 @@ const Admin = observer( () => {
             >
                 Додати пристрій
             </Button>
-            <CreateBrand show={brandVisible} onHide={() => setBrandVisible(false)}/>
-            <CreateDevice show={deviceVisible} onHide={() => setDeviceVisible(false)}/>
-            <CreateType show={typeVisible} onHide={() => setTypeVisible(false)}/>
+
+
+            <CreateBrand show={brandVisible} onHide={() => setBrandVisible(false)} location="ADD"/>
+            <CreateType show={typeVisible} onHide={() => setTypeVisible(false)} location="ADD"/>
             <CreateLegal show={legalVisible} onHide={() => setLegalVisible(false)}/>
+            <CreateDevice show={deviceVisible} onHide={() => setDeviceVisible(false)} />
         </Container>
     );
 });
