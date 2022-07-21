@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import Modal from "react-bootstrap/Modal";
 import {Form, Button} from "react-bootstrap";
 import {setDescription} from "../../http/deviceAPI";
-import {Context} from "../../index";
+
 import {useParams} from "react-router-dom";
 
 

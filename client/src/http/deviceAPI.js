@@ -12,7 +12,18 @@ export const fetchTypes = async () => {
 }
 
 export const delType = async (id) => {
-    const {data} = await $authHost.post('api/Type/del/'+ id)
+    const {data} = await $authHost.post('api/type/del/'+ id)
+    return data
+}
+
+
+export const hideType = async (id) => {
+    const {data} = await $authHost.post('api/type/hide/'+ id)
+    return data
+}
+
+export const updateType = async (id, name) => {
+    const {data} = await $authHost.post('api/type/upd/'+ id, {name})
     return data
 }
 
@@ -27,10 +38,7 @@ export const fetchBrands = async () => {
     return data
 }
 
-export const updateType = async (_id, _name) => {
-    const {data} = await $authHost.post('api/device/update', _id, _name)
-    return data
-}
+
 
 
 // ------ Фірми ------- //
