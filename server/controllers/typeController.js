@@ -16,37 +16,37 @@ class TypeController {
 
     async delOne(req, res) {
         const {id} = req.params
-        let device
+        let mess
         const devices = await Device.findAll(
             {where: {typeId: id}}
         ) 
 
         if(devices.length < 1 ){
-            device = await Type.destroy(
+            mess = await Type.destroy(
                 {where: {id: id}}
-            ); device = "Категорію видалено"
-        } else device = "Категорія містить пристрої, змініть назву або зробіть категорію скритою"
-        return res.json(device)
+            ); mess = "Категорію видалено"
+        } else mess = "Категорія містить пристрої, змініть назву або зробіть категорію скритою"
+        return res.json(mess)
     } 
 
     async Update(req, res) {
         const {id} = req.params
         let {name} = req.body
-        const device = await Type.update(
+        const result = await Type.update(
             {name: name},
             {where: {id: id}}
         )
-        return res.json(device)
+        return res.json(result)
     }
 
     async Hide(req, res) {
         const {id} = req.params
         const type = await Type.findOne({where: {id: id}})
-        const device = await Type.update(
+        const result = await Type.update(
             {visuable: (!type.visuable)},
             {where: {id: id}}
         )
-        return res.json(device)
+        return res.json(result)
     }
 
 }

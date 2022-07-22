@@ -1,14 +1,26 @@
 import {$authHost, $host} from "./index";
 
+
+ const Visuable = async (role, arr) =>
+{
+    let newArr = [];
+    for (let i = 0; i < arr.length; i++) 
+    if (arr[i].visuable === true) 
+    newArr.push(arr[i]);
+    return newArr
+}
+
 // ------ Тип ------- //
 export const createType = async (type) => {
     const {data} = await $authHost.post('api/type', type)
     return data
 }
 
-export const fetchTypes = async () => {
+export const fetchTypes = async (role) => {
     const {data} = await $host.get('api/type')
-    return data
+    let newData 
+    if(role === 'USER') newData = Visuable(role, data) 
+    return newData? newData: data
 }
 
 export const delType = async (id) => {
@@ -33,12 +45,28 @@ export const createBrand = async (brand) => {
     return data
 }
 
-export const fetchBrands = async () => {
+export const fetchBrands = async (role) => {
     const {data} = await $host.get('api/brand', )
+    let newData 
+    if(role === 'USER') newData = Visuable(role, data) 
+    return newData? newData: data
+}
+
+export const delBrand = async (id) => {
+    const {data} = await $authHost.post('api/brand/del/'+ id)
     return data
 }
 
 
+export const hideBrand = async (id) => {
+    const {data} = await $authHost.post('api/brand/hide/'+ id)
+    return data
+}
+
+export const updateBrand = async (id, name) => {
+    const {data} = await $authHost.post('api/brand/upd/'+ id, {name})
+    return data
+}
 
 
 // ------ Фірми ------- //
@@ -137,4 +165,3 @@ export const updateUserOrder = async (id, status) => {
     const {data} = await $authHost.post('api/order/update/'+id, {params:{id, status}})
     return data
 }
-
