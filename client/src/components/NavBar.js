@@ -13,9 +13,12 @@ const NavBar = observer(() => {
 
     const logOut = () => {
         user.setUser({})
+        user.setIsUser({})
         user.setIsAuth(false)
+        localStorage.removeItem('token')
+        window.location.reload();
     }
-
+//
     return (
         <Navbar bg="dark" variant="dark">
             <Container>

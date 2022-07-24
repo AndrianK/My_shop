@@ -21,7 +21,6 @@ const refreshPage = ()=>{
 }
     const _delete = (id) => {
         deleteFromBasket(id).then(response => alert(`Товар видалено з кошика`)).then(response => refreshPage())
-
     }
 
     // ----- Считаем общую сумму, которую юзер набрал в корзину ------- //
@@ -105,13 +104,13 @@ const refreshPage = ()=>{
                         </Row>
 
                     </Row>
-                    {product.id == device.selectedOrder &&
+                    {product.id === device.selectedOrder &&
                     <Row className=" d-flex mb-2 p-4 w-100  m-3">
                         <Col className={"mt-3"}>Name</Col>
                         <Col className={"mt-3"}>Price</Col>
                         <Col className={"mt-3"}>Image</Col>
                     </Row>}
-                    {product.id == device.selectedOrder &&
+                    {product.id === device.selectedOrder &&
                     device._orders_lists.map
                     (product =>
                         <Card className=" d-flex mb-2 p-4 m-3  ">
@@ -123,7 +122,7 @@ const refreshPage = ()=>{
                             </Row>
                         </Card>
                     )}
-                    {product.id == device.selectedOrder &&
+                    {product.id === device.selectedOrder &&
                     <Card className="d-flex flex-row  p-2 m-3 justify-content-between align-items-center mb-2">
                         <h1 className="align-self-end" >Усього:</h1>
                         <h3  className="ms-3 align-self-end">{prices2}<span className="font-weight-light pl-2"> $$$ </span></h3>

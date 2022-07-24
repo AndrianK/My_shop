@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 const TypeBar = observer(() => {
-    const {device, user} = useContext(Context)
+    const {device} = useContext(Context)
     return (
         <ListGroup>
             {device.types.map(type =>
@@ -15,7 +15,7 @@ const TypeBar = observer(() => {
                     active={type.id === device.selectedType.id ? true: undefined}
                     onClick={() => device.setSelectedType(type)}
                     key={type.id}
-                    className={type.id === 6 && "border-warning border-3"}
+                    className={type.visuable === false && "border-warning border-3"}
                 >
                     <Row className="d-inline">
                         <Col className="d-inline-block w-50">{type.name}</Col>

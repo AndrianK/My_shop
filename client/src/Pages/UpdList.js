@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {observer} from "mobx-react-lite";
 import {Button, Col,Card, Form } from "react-bootstrap";
-import { Context } from '..';
+import { Context } from '../index';
 import { delType, hideType, delBrand, hideBrand } from "../http/deviceAPI";
-import { updateType, updateBrand } from "../http/deviceAPI";
-const { useContext } = require("react");
+import { updateType, updateBrand, fetchBrands, fetchTypes } from "../http/deviceAPI";
+const { useContext, useEffect } = require("react");
 const { Container } = require("react-bootstrap");
 
 const DeleteT = (id) => {
@@ -21,11 +21,14 @@ const DeleteB = (id) => {
     })
 }
 
-
 const UpdList = observer(() => {
-    const {user} = useContext(Context)
-    const {device} = useContext(Context)
+    const {device,user} = useContext(Context)
     const [value, setValue] = useState('')
+
+    useEffect(() => {
+        fetchTypes(user.isRole).then(data => device.setTypes(data))
+        fetchBrands(user.isRole).then(data => device.setBrands(data))
+    }, []) //костыль, данные не передавались сюда, а перечитывались без учета роли пользователя (т.е. скрывали часть из них)
 
     const UpdateT = (id) => {
         updateType(id, value).then(data => {

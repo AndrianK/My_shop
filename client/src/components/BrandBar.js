@@ -14,10 +14,11 @@ const BrandBar = observer(() => {
                     style={{cursor:'pointer', width: 'min-content'}}
                     key={brand.id}
                     //active={brand.id === device.selectedBrand.id ? "true": undefined} not work
-                    className="p-3 me-lg-4"
+                    className={brand.visuable === false ? "border-warning border-3 p-3 me-lg-4": "p-3 me-lg-4"} 
                     onClick={() => device.setSelectedBrand(brand)}
                     bg={brand.id === device.selectedBrand.id ? 'primary' : 'light'}
                     text={brand.id === device.selectedBrand.id ? 'light' : 'black'}
+                    
                 >
                     {brand.name}
                 </Card>

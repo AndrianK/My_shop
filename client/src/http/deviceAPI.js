@@ -19,7 +19,7 @@ export const createType = async (type) => {
 export const fetchTypes = async (role) => {
     const {data} = await $host.get('api/type')
     let newData 
-    if(role === 'USER') newData = Visuable(role, data) 
+    if(role !== 'ADMIN') newData = Visuable(role, data) 
     return newData? newData: data
 }
 
@@ -48,7 +48,8 @@ export const createBrand = async (brand) => {
 export const fetchBrands = async (role) => {
     const {data} = await $host.get('api/brand', )
     let newData 
-    if(role === 'USER') newData = Visuable(role, data) 
+    if(role !== 'ADMIN') newData = Visuable(role, data) 
+    console.log("lol")
     return newData? newData: data
 }
 
@@ -99,7 +100,7 @@ export const fetchDevices = async (typeId, brandId, page, limit, role) => {
 }
 
 export const fetchOneDevice = async (id) => {
-    const {data} = await $host.get('api/device' + '/'+id)
+    const {data} = await $host.get('api/device/'+id)
     return data
 }
 
