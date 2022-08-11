@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useContext, useState } from 'react';
 import { Context } from '../';
-import {addToBasket, deleteFromBasket, getBasket, getUserOrder, getUserOrderList} from '../http/deviceAPI';
+import { deleteFromBasket, getBasket, getUserOrder, getUserOrderList} from '../http/deviceAPI';
 import {Button, Card, Col, Container, Row} from 'react-bootstrap'
 import { observer } from 'mobx-react-lite';
 import CreateOrder from "../components/modals/CreateOrder";
@@ -21,7 +21,6 @@ const refreshPage = ()=>{
 }
     const _delete = (id) => {
         deleteFromBasket(id).then(response => alert(`Товар видалено з кошика`)).then(response => refreshPage())
-
     }
 
     // ----- Считаем общую сумму, которую юзер набрал в корзину ------- //
@@ -67,14 +66,14 @@ const refreshPage = ()=>{
                                 </Col>
                             <Col  className="d-flex flex-row justify-content-end">
                                 <div className="flex-row">
-                                    <Button className="bg-danger" onClick={() => _delete(product.id)}> Delete </Button>
+                                    <Button className="bg-danger border-white" onClick={() => _delete(product.id)}> Delete </Button>
                                 </div>
                             </Col>
                         </Row>
                 </Card>
             )}
 
-            <Row> <Button className="bg-success" onClick={() => setOrderVisible(true)} >Надіслати замовлення</Button> </Row>
+            <Row> <Button className="bg-success border-dark" onClick={() => setOrderVisible(true)} >Надіслати замовлення</Button> </Row>
 
             <h1 className="pt-5 pb-2">Попередні замовлення</h1>
 
@@ -105,13 +104,13 @@ const refreshPage = ()=>{
                         </Row>
 
                     </Row>
-                    {product.id == device.selectedOrder &&
+                    {product.id === device.selectedOrder &&
                     <Row className=" d-flex mb-2 p-4 w-100  m-3">
                         <Col className={"mt-3"}>Name</Col>
                         <Col className={"mt-3"}>Price</Col>
                         <Col className={"mt-3"}>Image</Col>
                     </Row>}
-                    {product.id == device.selectedOrder &&
+                    {product.id === device.selectedOrder &&
                     device._orders_lists.map
                     (product =>
                         <Card className=" d-flex mb-2 p-4 m-3  ">
@@ -123,7 +122,7 @@ const refreshPage = ()=>{
                             </Row>
                         </Card>
                     )}
-                    {product.id == device.selectedOrder &&
+                    {product.id === device.selectedOrder &&
                     <Card className="d-flex flex-row  p-2 m-3 justify-content-between align-items-center mb-2">
                         <h1 className="align-self-end" >Усього:</h1>
                         <h3  className="ms-3 align-self-end">{prices2}<span className="font-weight-light pl-2"> $$$ </span></h3>

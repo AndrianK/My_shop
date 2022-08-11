@@ -8,15 +8,17 @@ const BrandBar = observer(() => {
     const {device} = useContext(Context)
 
     return (
-        <Row className="d-flex" >
+        <Row className="d-flex m-lg-1" >
             {device.brands.map(brand =>
                 <Card
                     style={{cursor:'pointer', width: 'min-content'}}
-
                     key={brand.id}
-                    className="p-3"
+                    //active={brand.id === device.selectedBrand.id ? "true": undefined} not work
+                    className={brand.visuable === false ? "border-warning border-3 p-3 me-lg-4": "p-3 me-lg-4"} 
                     onClick={() => device.setSelectedBrand(brand)}
-                    border={brand.id === device.selectedBrand.id ? 'primary' : 'light'}
+                    bg={brand.id === device.selectedBrand.id ? 'primary' : 'light'}
+                    text={brand.id === device.selectedBrand.id ? 'light' : 'black'}
+                    
                 >
                     {brand.name}
                 </Card>

@@ -11,26 +11,41 @@ const DeviceItem = ({device}) => {
     const {user} = useContext(Context)
     return (
         <Col md={3} className={"mt-3"} onClick={() => navigate(DEVICE_ROUTE + '/' + device.id)}>
-            {device.amount != 0 ?
+            {device.visuable == true ?
+                <div>
+                {
+                    device.amount != 0 ?
 
-            <Card style={{border: '2px solid lightgray', width: 170, height:300, cursor: 'pointer'} }className="p-2">
-                <Image width={150} height={150} src={process.env.REACT_APP_API_URL + device.img}/><br/>
-                <div style={{width: '90%', margin: '0 auto', textalign: 'center'}}>{device.name}<br/>
-                    ціна: {device.price} $$$
+                        <Card style={{border: '2px solid lightgray', width: 160, height: 300, cursor: 'pointer'}}
+                              className="p-2">
+                            <Image width={140} height={150} src={process.env.REACT_APP_API_URL + device.img}/><br/>
+                            <div style={{width: '90%', margin: '0 auto', textalign: 'center'}}>{device.name}<br/>
+                                ціна: {device.price} Грн
 
-                    Залишилось:{device.amount}
+                                Залишилось: {device.amount}
+                            </div>
+                        </Card>
+                        :
+
+                        <Card style={{border: '2px solid red', width: 160, height: 300, cursor: 'pointer'}}
+                              className="p-2">
+                            <Image width={140} height={150} src={process.env.REACT_APP_API_URL + device.img}/><br/>
+                            <div style={{width: '90%', margin: '0 auto', textalign: 'center'}}>{device.name}<br/>
+                                ціна: {device.price} Грн
+                                Немає в наявності
+                            </div>
+                        </Card>
+                }
                 </div>
+        :
+            <Card style={{border: '4px solid yellow', width: 160, height:300, cursor: 'pointer'} }className="p-2">
+            <Image width={140} height={150} src={process.env.REACT_APP_API_URL + device.img}/><br/>
+            <div style={{width: '90%', margin: '0 auto', textalign: 'center'}}>{device.name}<br/>
+            ціна: {device.price} Грн
+            Приховано
+            </div>
             </Card>
-         :
-
-                <Card style={{border: '2px solid red', width: 180, height:300, cursor: 'pointer'} }className="p-2">
-                <Image width={150} height={150} src={process.env.REACT_APP_API_URL + device.img}/><br/>
-                <div style={{width: '90%', margin: '0 auto', textalign: 'center'}}>{device.name}<br/>
-                    ціна: {device.price} $$$
-                    Немає в наявності
-                </div>
-            </Card>
-        }
+            }
         </Col>
     );
 };
